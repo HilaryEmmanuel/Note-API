@@ -10,6 +10,7 @@ module.exports = {
     getAllNote: noteController.getAllNotes,
     addNote: noteController.addNote,
     deleteNote : noteController.deleteNote,
-    updateNote : noteController.updateNote
+    updateNote : noteController.updateNote,
+    storage : noteController.storage
 
 }

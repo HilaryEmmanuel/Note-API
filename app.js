@@ -15,8 +15,8 @@ var dbsync = require('./model/note');
 /* third party middleware */
 var cors = require('cors');
 
-var authRouter = require('./routes/authRoutes')
-var noteRouter = require('./routes/notesRoutes')
+var authRouter = require('./routes/auth.routes')
+var noteRouter = require('./routes/notes.routes')
 
 var app = express();
 

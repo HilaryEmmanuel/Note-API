@@ -6,5 +6,4 @@ module.exports = {
     RefreshTokenExpiration: authConfig.RefreshTokenExpiration,
     AccesTokenExpiration: authConfig.AccesTokenExpiration,
     dbConfig: dbConfig.dbconnection,
-
 }

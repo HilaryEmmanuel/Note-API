@@ -11,8 +11,4 @@ const dbconnection = new Sequelize({
     logging: false /* raw queries should not be loggged to the console */
 })
 
-
-
-
-
 module.exports = {dbconnection};

@@ -1,35 +1,22 @@
 const model = require('../model/index');
+const cloudinary = require('cloudinary').v2;
 const notes = model.note;
 require('dotenv').config();
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
-
-//Cloudinary and multer upload
-cloudinary.config({
-    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-    api_key: process.env.CLOUDINARY_API_KEY,
-    api_secret: process.env.CLOUDINARY_API_SECRET,
-})
-
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    resource_type: "auto",
-    params: {
-        folder: "nono",
-        allowed_format: ['jpg', 'jpeg', 'png', 'gif', 'mp3', 'wav', 'ogg']
-    }
-})
+const config = require('../config/index')
+const storage = config.cloudinaryConfig;
 
 const addNote = async (req, res, next) => {
-    const userID = req.user_id;
-    const { title, note } = req.body;
-    const image = req.files['image'][0];
-    const audio = req.files['audio'][0]
-
     try {
-        await notes.create({ title: title, note: note, image: image.secure_url, audio_note: audio.secure_url, created_at: new Date(), ser_id: userID })
-        return res.status(201).json({ success: true, message: "note created succesfully" })
         
+        const userID = req.user_id;
+        const { title, note} = req.body;  
+        const image = req.files['image'] ? req.files['image'][0] : null;
+        const audio = req.files['audio'] ? req.files['audio'][0] : null;
+        const imageUpload = await cloudinary.uploader.upload(image.path, {resource_type: "auto"});
+        const audioUpload = await cloudinary.uploader.upload(audio.path, {resource_type: "auto"});
+        const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: audioUpload.secure_url , created_at: new Date(), user_id: userID })
+        return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
+
     } catch (err) {
         console.error("Error creating Note ", err)
         return (res.status(500).json({ success: false, message: "Internal Server Error" }), next(err))

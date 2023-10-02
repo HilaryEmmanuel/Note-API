@@ -7,6 +7,8 @@ module.exports = {
     login: authController.login,
     logout: authController.logout,
     refreshAndVerifyToken: authController.refreshAndVerifyToken,
+    forgotPassword : authController.forgotPassword,
+    resetPassword : authController.resetPassword,
     getAllNote: noteController.getAllNotes,
     addNote: noteController.addNote,
     deleteNote : noteController.deleteNote,

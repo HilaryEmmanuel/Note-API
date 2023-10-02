@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 const { secret } = require('../config/auth.config');
 const entry = require('../middleware/invalidateTokens')
 const Model = require('../model/index');
@@ -7,7 +9,7 @@ const User = Model.user;
 const auth_config = require('../config/index');
 
 /* Main Entry */
-const main = (req, res) => { res.json({ message: "API is running" }) }
+const main = (req, res) => { res.status(200).json({ message: "API is running" }) }
 
 // create User account that met all criterias
 const signup = async (req, res, next) => {
@@ -73,7 +75,7 @@ const refreshAndVerifyToken = async (req, res) => {
     }
 }
 
-/* User Logout */
+// User Logout
 const logout = (req, res) => {
     const token = req.headers.authorization;
     if (!token) { return res.status(400).json({ success: false, message: "token missing in headers" }) }
@@ -88,4 +90,31 @@ const logout = (req, res) => {
     }
 }
 
-module.exports = { main, signup, login, logout, refreshAndVerifyToken }
+
+//forget Password
+const forgotPassword = async(req, res)=>{
+    const {email} = req.body;
+    const userEmail = await User.findOne({ where: { email: email } })
+    if(!userEmail){return res.status(404).json({ success : false, message : "Email not found"})}
+    const token = uuidv4(); //generate reset password token
+    const tokenExpiration =  Date.now() + 3600000 //1 hour
+    await resetToken.create({email : email, token : token, tokenexpiration : tokenExpiration});
+    auth_config.passwordReset(email, token);
+    return res.status(200).json({success : true, message : "Email sent"})
+}
+
+//Reset Password
+const resetPassword = async(req, res)=>{
+    const { resetToken } = req.params;
+    const { password } = req.body;
+    const checkTokenExistence = Model.resetToken.findOne({ where : { token : resetToken}});
+    if(!checkTokenExistence || checkTokenExistence.tokenexpiration < Date.now()){return res.status(404).json({ success : false, message : "invalid or expired token "})}
+    var salt = crypto.randomBytes(16);
+    crypto.pbkdf2(password, salt, 310000, 32, 'sha256', async(err, hashPassword)=>{
+        if(err){return next(err)}
+        const updateUserPassword = await User.update({ password : hashPassword, salt : salt}, { where : { email : checkTokenExistence.email}})
+        if(!updateUserPassword){return res.json({ success : false, message : "password reset unsuccesfull something went wrong"})}
+        return res.status(200).json({ success : true, message : "password eset succesfull"});
+})}
+
+module.exports = { main, signup, login, logout, refreshAndVerifyToken, forgotPassword, resetPassword }

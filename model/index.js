@@ -1,10 +1,11 @@
 const user = require('./user');
 const note = require('./note');
-const refreshTokenFile = require('./refreshToken');
+const resetToken = require('./resettoken');
+const refreshTokenFile = require('./refreshtoken');
 const refreshToken = refreshTokenFile.createRefreshToken;
 const RefreshToken = refreshTokenFile.RefreshToken;
 const verify = refreshTokenFile.verifyTokenExpiration;
-const invalidtokens = require('./invalidTokens');
+const invalidtokens = require('./invalidtokens');
 
 const belongsToOperation = refreshTokenFile.RefreshToken.belongsTo(user, {
     foreignKey: "id", 
@@ -41,5 +42,6 @@ module.exports = {
     belongsToOperation,
     hasOneOperation,
     Association1,
+    resetToken : resetToken.resetToken
     // Association2
 }

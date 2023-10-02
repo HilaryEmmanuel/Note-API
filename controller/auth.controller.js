@@ -83,7 +83,7 @@ const logout = (req, res) => {
     try {
         entry.invalidateToken(token);
         return res.status(200).json({ success: true, message: "user logged out succesfully" })
-        
+
     } catch (err) {
         console.error("Error Invalidating token.................... ", err.stack)
         return res.status(500).json({ success: false, message: "Internal Server Error" })
@@ -92,29 +92,30 @@ const logout = (req, res) => {
 
 
 //forget Password
-const forgotPassword = async(req, res)=>{
-    const {email} = req.body;
+const forgotPassword = async (req, res) => {
+    const { email } = req.body;
     const userEmail = await User.findOne({ where: { email: email } })
-    if(!userEmail){return res.status(404).json({ success : false, message : "Email not found"})}
+    if (!userEmail) { return res.status(404).json({ success: false, message: "Email not found" }) }
     const token = uuidv4(); //generate reset password token
-    const tokenExpiration =  Date.now() + 3600000 //1 hour
-    await resetToken.create({email : email, token : token, tokenexpiration : tokenExpiration});
+    const tokenExpiration = Date.now() + 3600000 //1 hour
+    await resetToken.create({ email: email, token: token, tokenexpiration: tokenExpiration });
     auth_config.passwordReset(email, token);
-    return res.status(200).json({success : true, message : "Email sent"})
+    return res.status(200).json({ success: true, message: "Email sent" })
 }
 
 //Reset Password
-const resetPassword = async(req, res)=>{
+const resetPassword = async (req, res) => {
     const { resetToken } = req.params;
     const { password } = req.body;
-    const checkTokenExistence = Model.resetToken.findOne({ where : { token : resetToken}});
-    if(!checkTokenExistence || checkTokenExistence.tokenexpiration < Date.now()){return res.status(404).json({ success : false, message : "invalid or expired token "})}
+    const checkTokenExistence = Model.resetToken.findOne({ where: { token: resetToken } });
+    if (!checkTokenExistence || checkTokenExistence.tokenexpiration < Date.now()) { return res.status(404).json({ success: false, message: "invalid or expired token " }) }
     var salt = crypto.randomBytes(16);
-    crypto.pbkdf2(password, salt, 310000, 32, 'sha256', async(err, hashPassword)=>{
-        if(err){return next(err)}
-        const updateUserPassword = await User.update({ password : hashPassword, salt : salt}, { where : { email : checkTokenExistence.email}})
-        if(!updateUserPassword){return res.json({ success : false, message : "password reset unsuccesfull something went wrong"})}
-        return res.status(200).json({ success : true, message : "password eset succesfull"});
-})}
+    crypto.pbkdf2(password, salt, 310000, 32, 'sha256', async (err, hashPassword) => {
+        if (err) { return next(err) }
+        const updateUserPassword = await User.update({ password: hashPassword, salt: salt }, { where: { email: checkTokenExistence.email } })
+        if (!updateUserPassword) { return res.json({ success: false, message: "password reset unsuccesfull something went wrong" }) }
+        return res.status(200).json({ success: true, message: "password eset succesfull" });
+    })
+}
 
 module.exports = { main, signup, login, logout, refreshAndVerifyToken, forgotPassword, resetPassword }

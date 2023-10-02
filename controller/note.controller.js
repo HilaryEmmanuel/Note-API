@@ -1,34 +1,34 @@
 const model = require('../model/index');
 const cloudinary = require('cloudinary').v2;
+const { Op } = require('sequelize');
 const notes = model.note;
 require('dotenv').config();
 const config = require('../config/index');
-const { Op } = require('sequelize');
 const storage = config.cloudinaryConfig;
 
 const addNote = async (req, res, next) => {
     try {
-        
+
         const userID = req.user_id;
-        const { title, note} = req.body;  
+        const { title, note } = req.body;
         const image = req.files['image'] ? req.files['image'][0] : null;
         const audio = req.files['audio'] ? req.files['audio'][0] : null;
-        if(image && audio){
-            const imageUpload = await cloudinary.uploader.upload(image.path, {resource_type: "auto"});
-            const audioUpload = await cloudinary.uploader.upload(audio.path, {resource_type: "auto"});
-            const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: audioUpload.secure_url , created_at: new Date(), user_id: userID })
-            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
-        }else if(image){
-            const imageUpload = await cloudinary.uploader.upload(image.path, {resource_type: "auto"});
-            const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: null , created_at: new Date(), user_id: userID })
-            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
-        }else if(audio){
-            const audioUpload = await cloudinary.uploader.upload(audio.path, {resource_type: "auto"});
-            const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: audioUpload.secure_url , created_at: new Date(), user_id: userID })
-            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
-        }else{
-            const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: null , created_at: new Date(), user_id: userID })
-            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
+        if (image && audio) {
+            const imageUpload = await cloudinary.uploader.upload(image.path, { resource_type: "auto" });
+            const audioUpload = await cloudinary.uploader.upload(audio.path, { resource_type: "auto" });
+            const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: audioUpload.secure_url, created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note: noteCreation })
+        } else if (image) {
+            const imageUpload = await cloudinary.uploader.upload(image.path, { resource_type: "auto" });
+            const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: null, created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note: noteCreation })
+        } else if (audio) {
+            const audioUpload = await cloudinary.uploader.upload(audio.path, { resource_type: "auto" });
+            const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: audioUpload.secure_url, created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note: noteCreation })
+        } else {
+            const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: null, created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note: noteCreation })
         }
     } catch (err) {
         console.error("Error creating Note ", err)
@@ -50,15 +50,15 @@ const getAllNotes = async (req, res, next) => {
     }
 }
 
-const NoteSearch = async(req, res, next)=>{
+const NoteSearch = async (req, res, next) => {
     const userID = req.user_id;
-    const { query } = req.query
-
-    try{
-        const searchForNotes = await notes.findAll({ where : {user_id : userID, title : { [Op.like] : `%${query}%`}}})
-        if(!searchForNotes){return res.status(404).json({ success : false, message : "not  found", note : searchForNotes})}
-        return res.status(200).json({ success : true, message : "note  found", note  : searchForNotes})
-    }catch(err){
+    const { searchQuery } = req.query
+    if (!searchQuery) { return res.status(400).json({ success: false, message: "supply search query" }) }
+    try {
+        const searchForNotes = await notes.findAll({ where: { user_id: userID, title: { [Op.like]: `%${searchQuery}%` } } })
+        if (searchForNotes == '') { return res.status(404).json({ success: false, message: "no note  found", note: searchForNotes }) }
+        return res.status(200).json({ success: true, message: "note sucesfully retrieved", note: searchForNotes })
+    } catch (err) {
         console.error("Error fetching Note ", err)
         return (res.status(500).json({ success: false, message: "Internal Server Error" }), next(err));
     }
@@ -101,4 +101,4 @@ const deleteNote = async (req, res, next) => {
     }
 }
 
-module.exports = {addNote, getAllNotes, deleteNote, updateNote, NoteSearch, storage}
+module.exports = { addNote, getAllNotes, deleteNote, updateNote, NoteSearch, storage }

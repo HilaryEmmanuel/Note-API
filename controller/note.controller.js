@@ -2,7 +2,8 @@ const model = require('../model/index');
 const cloudinary = require('cloudinary').v2;
 const notes = model.note;
 require('dotenv').config();
-const config = require('../config/index')
+const config = require('../config/index');
+const { Op } = require('sequelize');
 const storage = config.cloudinaryConfig;
 
 const addNote = async (req, res, next) => {
@@ -49,6 +50,21 @@ const getAllNotes = async (req, res, next) => {
     }
 }
 
+const NoteSearch = async(req, res, next)=>{
+    const userID = req.user_id;
+    const { query } = req.query
+
+    try{
+        const searchForNotes = await notes.findAll({ where : {user_id : userID, title : { [Op.like] : `%${query}%`}}})
+        if(!searchForNotes){return res.status(404).json({ success : false, message : "not  found", note : searchForNotes})}
+        return res.status(200).json({ success : true, message : "note  found", note  : searchForNotes})
+    }catch(err){
+        console.error("Error fetching Note ", err)
+        return (res.status(500).json({ success: false, message: "Internal Server Error" }), next(err));
+    }
+}
+
+
 const updateNote = async (req, res, next) => {
     const userID = req.user_id;
     const noteId = parseInt(req.params.noteId);
@@ -85,4 +101,4 @@ const deleteNote = async (req, res, next) => {
     }
 }
 
-module.exports = {addNote, getAllNotes, deleteNote, updateNote, storage}
+module.exports = {addNote, getAllNotes, deleteNote, updateNote, NoteSearch, storage}

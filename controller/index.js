@@ -13,6 +13,7 @@ module.exports = {
     addNote: noteController.addNote,
     deleteNote : noteController.deleteNote,
     updateNote : noteController.updateNote,
+    noteSearch : noteController.NoteSearch,
     storage : noteController.storage
 
 }

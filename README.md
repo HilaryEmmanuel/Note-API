@@ -27,6 +27,7 @@ This is a Book NOTE API built with Nodejs + express js
 # Basic CRUD
 - Add a note
 - Get all note
+- Search for a Note
 - Update a note
 - Delete a note
 

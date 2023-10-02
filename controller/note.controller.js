@@ -12,11 +12,23 @@ const addNote = async (req, res, next) => {
         const { title, note} = req.body;  
         const image = req.files['image'] ? req.files['image'][0] : null;
         const audio = req.files['audio'] ? req.files['audio'][0] : null;
-        const imageUpload = await cloudinary.uploader.upload(image.path, {resource_type: "auto"});
-        const audioUpload = await cloudinary.uploader.upload(audio.path, {resource_type: "auto"});
-        const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: audioUpload.secure_url , created_at: new Date(), user_id: userID })
-        return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
-
+        if(image && audio){
+            const imageUpload = await cloudinary.uploader.upload(image.path, {resource_type: "auto"});
+            const audioUpload = await cloudinary.uploader.upload(audio.path, {resource_type: "auto"});
+            const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: audioUpload.secure_url , created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
+        }else if(image){
+            const imageUpload = await cloudinary.uploader.upload(image.path, {resource_type: "auto"});
+            const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: null , created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
+        }else if(audio){
+            const audioUpload = await cloudinary.uploader.upload(audio.path, {resource_type: "auto"});
+            const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: audioUpload.secure_url , created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
+        }else{
+            const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: null , created_at: new Date(), user_id: userID })
+            return res.status(201).json({ success: true, message: "note created succesfully", note : noteCreation  })
+        }
     } catch (err) {
         console.error("Error creating Note ", err)
         return (res.status(500).json({ success: false, message: "Internal Server Error" }), next(err))

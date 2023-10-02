@@ -9,8 +9,8 @@ const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env
 const tokens = sequelize.define('invalidtokens', {
     /* Model Attributes */
     user_id:{
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
+        type : DataTypes.BIGINT,
+        autoIncrement : true,
         primaryKey: true
         
     },

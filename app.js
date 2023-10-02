@@ -3,16 +3,12 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-/* db connection */
+// db connection module
 var dbConfig = require('../Note-Api/config/index');
 var dbconnection = dbConfig.dbConfig
-var dbsync = require('./model/note');
-// dbsync.drop();
-// dbsync.sync(()=>{
-//   console.log("succsefully synced")
-// });
 
-/* third party middleware */
+
+// third party middleware 
 var cors = require('cors');
 
 var authRouter = require('./routes/auth.routes')
@@ -30,8 +26,8 @@ app.use(cookieParser());
 
 app.use('/', authRouter);
 app.use('/', noteRouter);
-// app.use('/', noteRouter);
 
+//Db Connection
 async function dbconnect(){
   try{
     await dbconnection.authenticate();
@@ -42,9 +38,13 @@ async function dbconnect(){
 }
 dbconnect();
 
-/* Enabling cors */
-app.options('*', cors());
-app.use(cors());
+// CORS Enabled resource from this server can be accessed by any origin
+var options = {
+  origin : "*",
+  method : "POST, PUT, GET, DELETE",
+  allowheader : "Content-Type"
+}
+app.use(cors(options));
 
 
 // catch 404 and forward to error handler

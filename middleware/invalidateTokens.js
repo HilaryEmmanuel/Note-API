@@ -1,6 +1,7 @@
 const model = require('../model');
 const invalidTokens = model.invalidtokens;
 
+
 /* Function to invalidate a token and store it in the database*/
 const invalidateToken = async (token) => {
     try {

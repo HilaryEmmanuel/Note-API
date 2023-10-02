@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { secret } = require('../config/auth.config');
+const entry = require('../middleware/invalidateTokens')
 const Model = require('../model/index');
 const User = Model.user;
 const auth_config = require('../config/index');
@@ -73,16 +74,16 @@ const refreshAndVerifyToken = async (req, res) => {
 }
 
 /* User Logout */
-const logout = async (req, res) => {
-    const token = req.headers.Authorization;
+const logout = (req, res) => {
+    const token = req.headers.authorization;
     if (!token) { return res.status(400).json({ success: false, message: "token missing in headers" }) }
 
     try {
-        await Model.invalidtokens(token);
+        entry.invalidateToken(token);
         return res.status(200).json({ success: true, message: "user logged out succesfully" })
         
     } catch (err) {
-        console.error("Error Invalidating token.................... ", err)
+        console.error("Error Invalidating token.................... ", err.stack)
         return res.status(500).json({ success: false, message: "Internal Server Error" })
     }
 }

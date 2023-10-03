@@ -20,7 +20,7 @@ const signup = async (req, res, next) => {
 
         try {
             await User.create({ username: username, email: email, password: hashPassword, salt: salt })
-            return res.json({ sucess: true, message: "User signUp was succesfull" })
+            return res.status(201).json({ sucess: true, message: "User signUp was succesfull" })
 
         } catch (err) {
             console.error('User signUp not succesfull ', err);
@@ -76,12 +76,14 @@ const refreshAndVerifyToken = async (req, res) => {
 }
 
 // User Logout
-const logout = (req, res) => {
-    const token = req.headers.authorization;
-    if (!token) { return res.status(400).json({ success: false, message: "token missing in headers" }) }
+const logout = async(req, res) => {
+    const { refreshToken, accessToken } = req.body;
+    // const token = req.headers.authorization;
+    if (!refreshAndVerifyToken || !accessToken) { return res.status(400).json({ success: false, message: "token missing in headers" }) }
 
     try {
-        entry.invalidateToken(token);
+        await Model.RefreshToken.destroy({ where: { token : refreshToken}})
+        entry.invalidateToken(accessToken);
         return res.status(200).json({ success: true, message: "user logged out succesfully" })
 
     } catch (err) {

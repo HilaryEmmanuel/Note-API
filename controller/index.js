@@ -9,11 +9,12 @@ module.exports = {
     refreshAndVerifyToken: authController.refreshAndVerifyToken,
     forgotPassword : authController.forgotPassword,
     resetPassword : authController.resetPassword,
-    getAllNote: noteController.getAllNotes,
-    addNote: noteController.addNote,
+    listNotes: noteController.listNotes,
+    createNote: noteController.createNote,
     deleteNote : noteController.deleteNote,
     updateNote : noteController.updateNote,
     noteSearch : noteController.NoteSearch,
+    readNote : noteController.readNote,
     storage : noteController.storage
 
 }

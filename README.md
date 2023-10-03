@@ -1,4 +1,4 @@
-# BookDirectory-Api
+# Note-API
 This is a Book NOTE API built with Nodejs + express js
 
 # Pre-requisites
@@ -18,18 +18,14 @@ This is a Book NOTE API built with Nodejs + express js
   
   ` npm start  `
 
-# Features
-- SignUp
-- Login
-- Logout
-- token based Authentication
-
-# Basic CRUD
-- Add a note
-- Get all note
-- Search for a Note
-- Update a note
-- Delete a note
+# Functionalities
+- token based Authentication and Authorization
+- Create note
+- Read note
+- Search notes
+- List notes
+- Update note
+- Delete note
 
 # Testing
 - all Endpoints are tested

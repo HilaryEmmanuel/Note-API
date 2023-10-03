@@ -6,7 +6,7 @@ require('dotenv').config();
 const config = require('../config/index');
 const storage = config.cloudinaryConfig;
 
-const addNote = async (req, res, next) => {
+const createNote = async (req, res, next) => {
     try {
 
         const userID = req.user_id;
@@ -18,10 +18,12 @@ const addNote = async (req, res, next) => {
             const audioUpload = await cloudinary.uploader.upload(audio.path, { resource_type: "auto" });
             const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: audioUpload.secure_url, created_at: new Date(), user_id: userID })
             return res.status(201).json({ success: true, message: "note created succesfully", note: noteCreation })
+
         } else if (image) {
             const imageUpload = await cloudinary.uploader.upload(image.path, { resource_type: "auto" });
             const noteCreation = await notes.create({ title: title, note: note, image: imageUpload.secure_url, audio_note: null, created_at: new Date(), user_id: userID })
             return res.status(201).json({ success: true, message: "note created succesfully", note: noteCreation })
+
         } else if (audio) {
             const audioUpload = await cloudinary.uploader.upload(audio.path, { resource_type: "auto" });
             const noteCreation = await notes.create({ title: title, note: note, image: null, audio_note: audioUpload.secure_url, created_at: new Date(), user_id: userID })
@@ -36,7 +38,8 @@ const addNote = async (req, res, next) => {
     }
 }
 
-const getAllNotes = async (req, res, next) => {
+
+const listNotes = async (req, res, next) => {
     const userID = req.user_id;
 
     try {
@@ -49,6 +52,7 @@ const getAllNotes = async (req, res, next) => {
         return (res.status(500).json({ success: false, message: "Internal Server Error" }), next(err))
     }
 }
+
 
 const NoteSearch = async (req, res, next) => {
     const userID = req.user_id;
@@ -64,6 +68,22 @@ const NoteSearch = async (req, res, next) => {
     }
 }
 
+const readNote = async(req, res)=>{
+    const userID = req.user_id;
+    const  bookId  = parseInt(req.params.noteId);
+    if(!bookId){ return res.status(400).json({ success : false, message : "please supply an id"})}
+
+    try{
+        const findnote = await notes.findAll({ where : { note_id : bookId, user_id : userID}})
+        if(findnote==''){ return res.status(404).json({ success : false, message : "no note found", note : findnote})}
+        return res.status(200).json({ success : true, message : "note retrieved succesfully", note : findnote})
+
+    }catch(err){
+        console.error("Error fetching Note ", err)
+        return (res.status(500).json({ success: false, message: "Internal Server Error" }), next(err));
+    }
+
+}
 
 const updateNote = async (req, res, next) => {
     const userID = req.user_id;
@@ -101,4 +121,4 @@ const deleteNote = async (req, res, next) => {
     }
 }
 
-module.exports = { addNote, getAllNotes, deleteNote, updateNote, NoteSearch, storage }
+module.exports = { createNote, listNotes, deleteNote, updateNote, NoteSearch, readNote, storage }

@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 // db connection module
-var dbConfig = require('../Note-Api/config/index');
+var dbConfig = require('./config/index');
 var dbconnection = dbConfig.dbConfig
 
 

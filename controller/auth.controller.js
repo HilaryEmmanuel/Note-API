@@ -79,7 +79,7 @@ const refreshAndVerifyToken = async (req, res) => {
 const logout = async(req, res) => {
     const { refreshToken, accessToken } = req.body;
     // const token = req.headers.authorization;
-    if (!refreshAndVerifyToken || !accessToken) { return res.status(400).json({ success: false, message: "token missing in headers" }) }
+    if (!refreshAndVerifyToken || !accessToken) { return res.status(400).json({ success: false, message: "tokens missing please provide tokens" }) }
 
     try {
         await Model.RefreshToken.destroy({ where: { token : refreshToken}})

@@ -1,5 +1,5 @@
 # Note-API
-This is a Book NOTE API built with Nodejs + express js
+This is a NOTE API built with Nodejs + express js
 
 # Pre-requisites
 - install [Nodejs](https://nodejs.org/en/blog/release/v18.16.1) version v18.16.1

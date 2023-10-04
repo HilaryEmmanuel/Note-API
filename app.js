@@ -30,7 +30,8 @@ app.use('/', noteRouter);
 //Db Connection
 async function dbconnect(){
   try{
-    await dbconnection.authenticate();
+   const check =  await dbconnection.authenticate();
+    console.log( check )
     console.log("connection was established succesfully")
     }catch(err){
         console.error("Unable to connect to the database ", err)

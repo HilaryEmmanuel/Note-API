@@ -48,7 +48,7 @@ const verifyTokenExpiration = RefreshToken.verifyExpiration = (token)=>{
 
 
 // return RefreshToken;
-module.exports = {
+modules.exports = {
     RefreshToken,
     createRefreshToken,
     verifyTokenExpiration

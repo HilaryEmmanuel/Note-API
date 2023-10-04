@@ -2,7 +2,7 @@ const user = require('./user');
 const note = require('./note');
 const resetToken = require('./resettoken');
 const refreshTokenFile = require('./refreshtoken');
-const refreshToken = refreshTokenFile.createRefreshToken;
+const createRefreshToken = refreshTokenFile.createRefreshToken;
 const RefreshToken = refreshTokenFile.RefreshToken;
 const verify = refreshTokenFile.verifyTokenExpiration;
 const invalidtokens = require('./invalidtokens');
@@ -36,7 +36,7 @@ module.exports = {
     user,
     note,
     invalidtokens,
-    refreshToken,
+    createRefreshToken,
     RefreshToken,
     verify,
     belongsToOperation,

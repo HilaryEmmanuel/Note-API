@@ -43,7 +43,7 @@ const login = async (req, res, next) => {
             }
 
             const token = jwt.sign({ id: User_.user_id }, secret, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
-            const refreshToken_ = await Model.refreshToken(User_)
+            const refreshToken_ = await Model.createRefreshToken(User_)
             return res.status(200).json({ success: true, user: { id: User_.user_id, email: User_.email, username: User_.username }, accessToken: token, refreshToken: refreshToken_ })
         })
 

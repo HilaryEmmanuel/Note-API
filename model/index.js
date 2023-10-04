@@ -1,11 +1,11 @@
 const user = require('./user');
 const note = require('./note');
 const resetToken = require('./resettoken');
-const refreshTokenFile = require('./refreshtoken');
+const refreshTokenFile = require('./refreshToken');
 const createRefreshToken = refreshTokenFile.createRefreshToken;
 const RefreshToken = refreshTokenFile.RefreshToken;
 const verify = refreshTokenFile.verifyTokenExpiration;
-const invalidtokens = require('./invalidtokens');
+const invalidtokens = require('./invalidTokens');
 
 const belongsToOperation = refreshTokenFile.RefreshToken.belongsTo(user, {
     foreignKey: "id", 

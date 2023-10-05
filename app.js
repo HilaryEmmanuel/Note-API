@@ -24,6 +24,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// CORS Enabled resource from this server can be accessed by any origin
+var options = {
+  origin : "*",
+  method : "POST, PUT, GET, DELETE",
+  allowheader : "Content-Type"
+}
+app.use(cors(options));
+
+// use helmet middleware
+app.use(helmet());
 
 app.use('/', authRouter);
 app.use('/', noteRouter);
@@ -40,16 +50,6 @@ async function dbconnect(){
 }
 dbconnect();
 
-// CORS Enabled resource from this server can be accessed by any origin
-var options = {
-  origin : "*",
-  method : "POST, PUT, GET, DELETE",
-  allowheader : "Content-Type"
-}
-app.use(cors(options));
-
-// use helmet middleware
-app.use(helmet());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404, "routes does not exist"));

@@ -44,7 +44,7 @@ const listNotes = async (req, res, next) => {
 
     try {
         const Notes = await notes.findAll({ where: { user_id: userID } });
-        if (Notes=='') { return res.status(404).json({ success: false, message: "you do not have any note" }) }
+        if (Notes=='') { return res.status(404).json({ success: false, message: "you do not have any note", notes : Notes }) }
         return res.status(200).json({ success: true, message: "notes succesfully retrieved", notes: Notes })
 
     } catch (err) {

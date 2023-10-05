@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
-const { secret } = require('../config/auth.config');
+// const { secret } = require('../config/auth.config');
 const entry = require('../middleware/invalidateTokens')
 const Model = require('../model/index');
 const User = Model.user;
@@ -42,7 +42,7 @@ const login = async (req, res, next) => {
                 return res.status(404).json({ success: false, accessToken: null, message: "incorrect username or password" })
             }
 
-            const token = jwt.sign({ id: User_.user_id }, secret, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
+            const token = jwt.sign({ id: User_.user_id }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
             const refreshToken_ = await Model.createRefreshToken(User_)
             return res.status(200).json({ success: true, user: { id: User_.user_id, email: User_.email, username: User_.username }, accessToken: token, refreshToken: refreshToken_ })
         })

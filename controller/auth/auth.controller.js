@@ -41,7 +41,7 @@ const login = async (req, res, next) => {
                 return res.status(404).json({ success: false, accessToken: null, message: "incorrect username or password" })
             }
 
-            const token = jwt.sign({ id: User_.user_id }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
+            const token = jwt.sign({ id: User_.user_id }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: parseInt(process.env.AccesTokenExpiration)})
             const refreshToken_ = await Model.createRefreshToken(User_)
             return res.status(200).json({ success: true, user: { id: User_.user_id, email: User_.email, username: User_.username }, accessToken: token, refreshToken: refreshToken_ })
         })
@@ -65,7 +65,7 @@ const refreshAndVerifyToken = async (req, res) => {
             return res.status(403).json({ success: false, message: "Request Token has Expired please make a new signin Request" })
         }
         const user = refreshToken;
-        const newAccessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
+        const newAccessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: parseInt(process.env.AccesTokenExpiration) })
         return res.status(200).json({ success: true, accessToken: newAccessToken, refreshToken: refreshToken.token })
 
     } catch (err) {

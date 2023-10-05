@@ -30,12 +30,12 @@ const notes = sequelize.define('notes', {
     },
   
     image:{
-        type: DataTypes.BLOB,
+        type: DataTypes.STRING,
         allowNull: true
     },
 
     audio_note:{
-        type: DataTypes.BLOB,
+        type: DataTypes.STRING,
         allowNull: true
     },
 

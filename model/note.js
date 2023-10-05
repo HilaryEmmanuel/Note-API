@@ -2,7 +2,7 @@ const {Sequelize, DataTypes, DATE} = require('sequelize');
 require('dotenv').config();
 
 const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {dialect : "postgres",dialectOptions : {ssl :true}})
-sequelize.sync()
+sequelize.sync({ force : true})
 const notes = sequelize.define('notes', {
     /* model Attributes */
     note_id:{

@@ -6,7 +6,7 @@ const secret = config.secret;
 const { TokenExpiredError } = jwt;
 const catchError = (err, res) => {
     if (err instanceof TokenExpiredError) { return res.status(401).json({ success: false, messsage: "Unauthorized! Access Token was Expired" }) }
-    return res.status(401).json({ success: false, message: "Unauthorized!" })
+    return res.status(401).json({ success: false, message: "Unauthorized! Token Expired" })
 }
 
 // Token verification

@@ -10,6 +10,7 @@ var dbconnection = dbConfig.dbConfig
 
 // third party middleware 
 var cors = require('cors');
+var helmet = require('helmet');
 
 var authRouter = require('./routes/auth.routes')
 var noteRouter = require('./routes/notes.routes')
@@ -47,7 +48,8 @@ var options = {
 }
 app.use(cors(options));
 
-
+// use helmet middleware
+app.use(helmet());
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404, "routes does not exist"));

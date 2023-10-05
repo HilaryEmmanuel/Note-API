@@ -11,7 +11,9 @@ var dbconnection = dbConfig.dbConfig
 // third party middleware 
 var cors = require('cors');
 var helmet = require('helmet');
-
+var swagger_ui_express = require('swagger-ui-express');
+var swagger = require('./api-doc/swagger');
+var OpenAiSpecification = swagger.OpenAiSpecification
 var authRouter = require('./routes/auth.routes')
 var noteRouter = require('./routes/notes.routes')
 
@@ -23,6 +25,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use('/api-docs',  swagger_ui_express.serve, swagger_ui_express.setup(OpenAiSpecification))
 
 // CORS Enabled resource from this server can be accessed by any origin
 var options = {
@@ -42,8 +46,7 @@ app.use('/', noteRouter);
 async function dbconnect(){
   try{
    const check =  await dbconnection.authenticate();
-    console.log( check )
-    console.log("connection was established succesfully")
+   if(check){console.log("connection was established succesfully")}
     }catch(err){
         console.error("Unable to connect to the database ", err)
     }

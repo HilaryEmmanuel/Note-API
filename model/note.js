@@ -1,11 +1,11 @@
-const {Sequelize, DataTypes, DATE} = require('sequelize');
+const { Sequelize, DataTypes, DATE } = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {dialect : "postgres",dialectOptions : {ssl :true}})
-sequelize.sync()
+const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { dialect: "postgres", dialectOptions: { ssl: true } , logging : false})
+// sequelize.sync()
 const notes = sequelize.define('notes', {
     /* model Attributes */
-    note_id:{
+    note_id: {
         type: DataTypes.BIGINT,
         autoIncrement: true,
         allowNull: false,
@@ -13,40 +13,40 @@ const notes = sequelize.define('notes', {
 
     },
 
-    user_id:{
+    user_id: {
         type: DataTypes.BIGINT,
         allowNull: false
 
     },
 
-    title:{
+    title: {
         type: DataTypes.STRING,
         allowNull: false,
     },
 
-    note:{
+    note: {
         type: DataTypes.STRING(1000),
         allowNull: false
     },
-  
-    image:{
+
+    image: {
         type: DataTypes.STRING,
         allowNull: true
     },
 
-    audio_note:{
+    audio_note: {
         type: DataTypes.STRING,
         allowNull: true
     },
 
-    created_at:{
+    created_at: {
         type: DataTypes.DATE,
         allowNull: true,
 
     }
 }, {
-    createdAt:false,
-    updatedAt:false
+    createdAt: false,
+    updatedAt: false
 })
 
 module.exports = notes;

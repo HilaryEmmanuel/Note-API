@@ -35,7 +35,7 @@ This is a NOTE API built with Nodejs + express js
 - Postgresql - the Relational database mangement system used
 - sequelize - the Orm used
 - supertest & mocha - for testing
-- jsonwebtoken
+- jsonwebtoken - for creation and verification of jwt token
 
 
 

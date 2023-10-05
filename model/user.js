@@ -1,44 +1,44 @@
-const {Sequelize, DataTypes} = require('sequelize');
+const { Sequelize, DataTypes } = require('sequelize');
 require('dotenv').config();
-const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {dialect : "postgres",dialectOptions : {ssl :true, }})
+const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, { dialect: "postgres", dialectOptions: { ssl: true, } , logging : false})
 // const sequelize = new Sequelize(`postgres://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`, {dialect : "postgres"})
-sequelize.sync()
+// sequelize.sync()
 const users = sequelize.define('users', {
     /* Model Attributes */
-    user_id:{
+    user_id: {
         type: DataTypes.BIGINT,
-        autoIncrement : true,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
 
     },
 
-    username:{
+    username: {
         type: DataTypes.STRING,
-        allowNull: false,   
+        allowNull: false,
     },
 
-    email:{
+    email: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-            isEmail : true
+            isEmail: true
         }
     },
 
-    password:{
+    password: {
         type: DataTypes.BLOB,
         allowNull: false,
     },
 
-    salt:{
+    salt: {
         type: DataTypes.BLOB,
         allowNull: false
     },
-    
+
 
 }, {
-    createdAt:false,
+    createdAt: false,
     updatedAt: false,
 })
 

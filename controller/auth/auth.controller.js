@@ -2,7 +2,6 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
-// const { secret } = require('../config/auth.config');
 const entry = require('../../middleware/invalidateTokens')
 const Model = require('../../model/index');
 const User = Model.user;
@@ -66,7 +65,7 @@ const refreshAndVerifyToken = async (req, res) => {
             return res.status(403).json({ success: false, message: "Request Token has Expired please make a new signin Request" })
         }
         const user = refreshToken;
-        const newAccessToken = jwt.sign({ id: user.id }, secret, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
+        const newAccessToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: auth_config.AccesTokenExpiration })
         return res.status(200).json({ success: true, accessToken: newAccessToken, refreshToken: refreshToken.token })
 
     } catch (err) {

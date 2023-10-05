@@ -3,10 +3,10 @@ const crypto = require('crypto');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 // const { secret } = require('../config/auth.config');
-const entry = require('../middleware/invalidateTokens')
-const Model = require('../model/index');
+const entry = require('../../middleware/invalidateTokens')
+const Model = require('../../model/index');
 const User = Model.user;
-const auth_config = require('../config/index');
+const auth_config = require('../../config/index');
 
 /* Main Entry */
 const main = (req, res) => { res.status(200).json({ message: "API is running" }) }

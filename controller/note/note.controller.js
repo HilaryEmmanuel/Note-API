@@ -392,7 +392,7 @@ const restoreTrash = async (req, res, next) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
   try {
-    const restoreItemFromTrash = notes.restore({
+    const restoreItemFromTrash = await notes.restore({
       where: { note_id: noteId, user_id: userID }
     })
     if (restoreItemFromTrash) {

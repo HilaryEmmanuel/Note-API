@@ -1,4 +1,4 @@
-const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerJsDoc = require('swagger-jsdoc')
 const options_ = {
   definition: {
     openapi: '3.0.0',
@@ -7,24 +7,23 @@ const options_ = {
       version: '1.0.0',
       parameters: [
         {
-          name: "id",
-          in: "path",
-          description: "ID of pet to use",
+          name: 'id',
+          in: 'path',
+          description: 'ID of pet to use',
           required: true,
           schema: {
-            type: "array",
+            type: 'array',
             items: {
-              type: "string"
+              type: 'string'
             }
           },
-          "style": "simple"
+          style: 'simple'
         }
       ]
-    },
+    }
   },
-  apis: ['./routes/*.js'], // files containing annotations as above
-};
-  
+  apis: ['./routes/*.js'] // files containing annotations as above
+}
 
-var OpenAiSpecification = swaggerJsDoc(options_);
-module.exports = {OpenAiSpecification}
+const OpenAiSpecification = swaggerJsDoc(options_)
+module.exports = { OpenAiSpecification }

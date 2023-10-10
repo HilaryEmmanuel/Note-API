@@ -40,4 +40,4 @@ This is a NOTE API built with Nodejs + express js
 
 
 # Api Documentation
-https://www.postman.com/cloudy-escape-698934/workspace/projects/collection/24822385-337518b5-e228-4f79-ac44-3048702d30b5?action=share&creator=24822385&active-environment=24822385-b0c2da6f-cd7a-4ba1-827f-ed49c6ab4fdf
+https://www.postman.com/cloudy-escape-698934/workspace/project-workspace/collection/24822385-7840ccdc-b7fc-4090-a5ae-a707b40355f2?action=share&creator=24822385&active-environment=24822385-5d70ead2-9526-43e5-9103-e6c7590a7226

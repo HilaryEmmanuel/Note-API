@@ -366,6 +366,11 @@ const deleteFromTrash = async (req, res) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
   try {
+    if (!noteId) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'make sure you supply an id' })
+    }
     const deleteItem = await notes.destroy({
       where: { note_id: noteId, user_id: userID },
       force: true
@@ -392,6 +397,11 @@ const restoreTrash = async (req, res, next) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
   try {
+    if (!noteId) {
+      return res
+        .status(404)
+        .json({ success: false, message: 'make sure you supply an id' })
+    }
     const restoreItemFromTrash = await notes.restore({
       where: { note_id: noteId, user_id: userID }
     })

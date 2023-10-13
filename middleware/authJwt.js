@@ -10,7 +10,7 @@ const catchError = (err, res) => {
       .status(401)
       .json({
         success: false,
-        messsage: 'Unauthorized! Access Token was Expired'
+        messsage: 'Unauthorized! Access Token has Expired'
       })
   }
   return res.status(401).json({ success: false, message: 'Unauthorized!' })

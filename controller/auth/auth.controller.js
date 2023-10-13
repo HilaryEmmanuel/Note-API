@@ -7,7 +7,7 @@ const Model = require('../../model/index')
 const User = Model.user
 const authConfig = require('../../config/index')
 
-/* Main Entry */
+// Base Route
 const main = (req, res) => {
   res.status(200).json({ message: 'API is running' })
 }
@@ -42,7 +42,7 @@ const signup = async (req, res, next) => {
   )
 }
 
-/* User Login */
+// User Login
 const login = async (req, res, next) => {
   const { username, password } = req.body
 

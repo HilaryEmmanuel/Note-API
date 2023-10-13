@@ -3,10 +3,9 @@ const controller = require('../controller/index')
 const middleware = require('../middleware/index')
 const router = express.Router()
 
-/* json response */
+// Base route Endpoint
 router.get('/', controller.main)
 
-/* Authentication */
 /**
  * @swagger
  * https://note-api-amz2.onrender.com/api/v1/auth/signup:

@@ -36,7 +36,7 @@ app.use(
 const options = {
   origin: '*',
   method: 'POST, PUT, GET, DELETE',
-  allowheader: 'Content-Type'
+  allowheader: 'Content-Type, authorization'
 }
 app.use(cors(options))
 

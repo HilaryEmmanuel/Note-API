@@ -35,8 +35,8 @@ app.use(
 // CORS Enabled resource from this server can be accessed by any origin
 const options = {
   origin: '*',
-  method: 'POST, PUT, GET, DELETE',
-  allowheader: 'Content-Type, authorization'
+  methods: ['POST', 'PUT', 'GET', 'DELETE'],
+  allowheader: ['Content-Type', 'authorization']
 }
 app.use(cors(options))
 

@@ -3,7 +3,6 @@ const router = express.Router()
 const multer = require('multer')
 const middleware = require('../middleware/index')
 const controller = require('../controller/index')
-const utils = require('../utils/index')
 const storage = controller.storage
 const upload = multer({ storage })
 
@@ -27,7 +26,6 @@ router.get(
 
 router.get(
   '/users/notes/search',
-  utils.signupValidation,
   middleware.authJwt,
   middleware.invalidateTokens,
   controller.noteSearch

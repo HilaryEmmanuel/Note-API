@@ -13,9 +13,6 @@ const dbconnection = dbConfig.dbConfig
 // third party middleware
 const cors = require('cors')
 const helmet = require('helmet')
-const swagger_ui_express = require('swagger-ui-express')
-const swagger = require('./api-doc/swagger')
-const OpenAiSpecification = swagger.OpenAiSpecification
 const authRouter = require('./routes/auth.routes')
 const noteRouter = require('./routes/notes.routes')
 
@@ -26,11 +23,6 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-app.use(
-  '/api-docs',
-  swagger_ui_express.serve,
-  swagger_ui_express.setup(OpenAiSpecification)
-)
 
 // CORS Enabled resource from this server can be accessed by any origin
 const options = {

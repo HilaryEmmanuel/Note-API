@@ -6,13 +6,6 @@ const router = express.Router()
 // Base route Endpoint
 router.get('/', controller.main)
 
-/**
- * @swagger
- * https://note-api-amz2.onrender.com/api/v1/auth/signup:
- *   post:
- *     summary:  User signup
- *     description: Create a User that satisfies the SignUp criterias.
- */
 router.post('/api/v1/auth/signup', middleware.verifySignup, controller.signup)
 
 router.post('/api/v1/auth/login', controller.login)

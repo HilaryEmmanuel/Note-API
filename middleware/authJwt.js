@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken')
-const config = require('../config/auth.config')
 const secret = config.secret
 
 // Handle Token Expiration Error

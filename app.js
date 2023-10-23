@@ -27,7 +27,7 @@ app.use(cookieParser())
 // CORS Enabled resource from this server can be accessed by any origin
 const options = {
   origin: '*',
-  methods: ['POST', 'PUT', 'GET', 'DELETE'],
+  methods: ['POST', 'PATCH', 'GET', 'DELETE'],
   allowheader: ['Content-Type', 'authorization']
 }
 app.use(cors(options))

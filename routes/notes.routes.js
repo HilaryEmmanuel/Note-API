@@ -38,7 +38,7 @@ router.get(
   controller.readNote
 )
 
-router.put(
+router.patch(
   '/users/notes/updatenotes/:noteId',
   middleware.authJwt,
   middleware.invalidateTokens,

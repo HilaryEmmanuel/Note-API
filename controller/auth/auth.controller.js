@@ -101,7 +101,7 @@ const refreshAndVerifyToken = async (req, res) => {
   const { refreshToken: requestToken } = req.body // destructured refreshToken property from req.body and renamed it to requestToken
   if (!requestToken) {
     return res
-      .status(403)
+      .status(401)
       .json({ success: false, message: 'Refresh token is required' })
   }
 
@@ -111,12 +111,12 @@ const refreshAndVerifyToken = async (req, res) => {
     })
     if (!refreshToken) {
       return res
-        .status(403)
+        .status(200)
         .json({ success: false, message: 'Request Token is not in database' })
     }
     if (Model.verify(refreshToken)) {
       await Model.RefreshToken.destroy({ where: { id: refreshToken.id } })
-      return res.status(403).json({
+      return res.status(200).json({
         success: false,
         message: 'Request Token has Expired please make a new signin Request'
       })

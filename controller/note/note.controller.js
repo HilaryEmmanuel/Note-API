@@ -98,7 +98,7 @@ const listNotes = async (req, res, next) => {
   try {
     const Notes = await notes.findAll({ where: { user_id: userID } })
     if (Notes.length === 0) {
-      return res.status(404).json({
+      return res.status(200).json({
         success: false,
         message: 'you do not have any note',
         notes: Notes
@@ -133,7 +133,7 @@ const NoteSearch = async (req, res, next) => {
       where: { user_id: userID, title: { [Op.like]: `%${searchQuery}%` } }
     })
     if (searchForNotes.length === 0) {
-      return res.status(404).json({
+      return res.status(200).json({
         success: false,
         message: 'no note  found',
         note: searchForNotes
@@ -170,8 +170,8 @@ const readNote = async (req, res, next) => {
     })
     if (findnote.length === 0) {
       return res
-        .status(404)
-        .json({ success: false, message: 'no note found', note: findnote })
+        .status(200)
+        .json({ success: false, message: 'you do not have any note', note: findnote })
     }
     return res.status(200).json({
       success: true,
@@ -197,7 +197,7 @@ const updateNote = async (req, res, next) => {
   try {
     if (!noteId) {
       return res
-        .status(404)
+        .status(400)
         .json({ success: false, message: 'make sure you supply an id' })
     }
     if (title && note && image) {
@@ -208,7 +208,7 @@ const updateNote = async (req, res, next) => {
       const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
       if (!Notes) {
         return res
-          .status(400)
+          .status(200)
           .json({ success: false, message: 'note was not updated' })
       }
       return res.status(200).json({
@@ -224,7 +224,7 @@ const updateNote = async (req, res, next) => {
       const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
       if (!Notes) {
         return res
-          .status(400)
+          .status(200)
           .json({ success: false, message: 'note was not updated' })
       }
       return res.status(200).json({
@@ -240,7 +240,7 @@ const updateNote = async (req, res, next) => {
       const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
       if (!Notes) {
         return res
-          .status(400)
+          .status(200)
           .json({ success: false, message: 'note was not updated' })
       }
       return res.status(200).json({
@@ -256,7 +256,7 @@ const updateNote = async (req, res, next) => {
       const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
       if (!Notes) {
         return res
-          .status(400)
+          .status(200)
           .json({ success: false, message: 'note was not updated' })
       }
       return res.status(200).json({
@@ -272,7 +272,7 @@ const updateNote = async (req, res, next) => {
       const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
       if (!Notes) {
         return res
-          .status(400)
+          .status(200)
           .json({ success: false, message: 'note was not updated' })
       }
       return res.status(200).json({
@@ -304,7 +304,7 @@ const deleteNote = async (req, res, next) => {
   try {
     if (!noteId) {
       return res
-        .status(404)
+        .status(400)
         .json({ success: false, message: 'make sure you supply an id' })
     }
     const Notes = await notes.destroy({
@@ -339,7 +339,7 @@ const trash = async (req, res, next) => {
       paranoid: false
     }) // Filter only soft Deleted rows
     if (userTrash.length === 0) {
-      return res.status(404).json({
+      return res.status(200).json({
         success: true,
         message: 'your trash is empty',
         notes: userTrash
@@ -368,7 +368,7 @@ const deleteFromTrash = async (req, res) => {
   try {
     if (!noteId) {
       return res
-        .status(404)
+        .status(400)
         .json({ success: false, message: 'make sure you supply an id' })
     }
     const deleteItem = await notes.destroy({
@@ -399,7 +399,7 @@ const restoreTrash = async (req, res, next) => {
   try {
     if (!noteId) {
       return res
-        .status(404)
+        .status(400)
         .json({ success: false, message: 'make sure you supply an id' })
     }
     const restoreItemFromTrash = await notes.restore({
@@ -408,7 +408,7 @@ const restoreTrash = async (req, res, next) => {
     if (restoreItemFromTrash) {
       res.status(200).json({ success: true, message: 'deleted item restored' })
     }
-    return res.status(404).json({ success: true, message: 'note not found' })
+    return res.status(200).json({ success: true, message: 'note not found' })
   } catch (err) {
     console.log(err)
     return (
@@ -432,7 +432,7 @@ const emptyTrash = async (req, res, next) => {
         .status(200)
         .json({ success: true, message: 'trash emptied successfully' })
     }
-    return res.status(404).json({ success: true, message: 'nothing in trash' })
+    return res.status(200).json({ success: true, message: 'nothing in trash' })
   } catch (err) {
     console.log(err)
     return (

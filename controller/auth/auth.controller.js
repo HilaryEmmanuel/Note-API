@@ -141,7 +141,8 @@ const refreshAndVerifyToken = async (req, res) => {
 
 // User Logout
 const logout = async (req, res) => {
-  const { refreshToken, accessToken } = req.body
+  const accessToken =  req.headers.authorization
+  const { refreshToken } = req.body
   if (!refreshAndVerifyToken || !accessToken) {
     return res.status(400).json({
       success: false,

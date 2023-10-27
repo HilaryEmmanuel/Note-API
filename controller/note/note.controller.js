@@ -86,8 +86,7 @@ const createNote = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -114,8 +113,7 @@ const listNotes = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -149,8 +147,7 @@ const NoteSearch = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -183,8 +180,7 @@ const readNote = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -290,8 +286,7 @@ const updateNote = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -324,8 +319,7 @@ const deleteNote = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -355,8 +349,7 @@ const trash = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -386,8 +379,7 @@ const deleteFromTrash = async (req, res) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -414,8 +406,7 @@ const restoreTrash = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }
@@ -438,8 +429,7 @@ const emptyTrash = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ success: false, message: 'Internal Server Error' }),
-      next(err)
+        .json({ success: false, message: 'Internal Server Error' })
     )
   }
 }

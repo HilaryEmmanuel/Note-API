@@ -9,7 +9,7 @@ const authConfig = require('../../config/index')
 
 // Base Route
 const main = (req, res) => {
-  res.status(200).json({ message: 'API is running' })
+  res.status(200).json({ message: 'NOTE API is running' })
 }
 
 // create User account that meets all criterias
@@ -92,7 +92,9 @@ const login = async (req, res, next) => {
     )
   } catch (err) {
     console.error(err)
-    return next(err)
+    return res
+    .status(500)
+    .json({ sucess: false, message: 'User login failed' })
   }
 }
 
@@ -216,7 +218,7 @@ const resetPassword = async (req, res) => {
       }
       return res
         .status(200)
-        .json({ success: true, message: 'password eset succesfull' })
+        .json({ success: true, message: 'password reset succesfull' })
     }
   )
 }

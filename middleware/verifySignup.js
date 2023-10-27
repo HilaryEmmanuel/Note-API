@@ -20,8 +20,7 @@ const verifyUsernameAndEmail = async (req, res, next) => {
     return (
       res
         .status(500)
-        .json({ sucess: false, message: 'unable to validate username' }),
-      next(err)
+        .json({ sucess: false, message: 'unable to validate username' })
     )
   }
 }

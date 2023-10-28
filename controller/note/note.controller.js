@@ -6,7 +6,7 @@ require('dotenv').config()
 const config = require('../../config/index')
 const storage = config.cloudinaryConfig
 
-const createNote = async (req, res, next) => {
+const createNote = async (req, res) => {
   try {
     const userID = req.user_id
     const { title, note } = req.body
@@ -91,7 +91,9 @@ const createNote = async (req, res, next) => {
   }
 }
 
-const listNotes = async (req, res, next) => {
+
+
+const listNotes = async (req, res) => {
   const userID = req.user_id
 
   try {
@@ -118,7 +120,9 @@ const listNotes = async (req, res, next) => {
   }
 }
 
-const NoteSearch = async (req, res, next) => {
+
+
+const NoteSearch = async (req, res) => {
   const userID = req.user_id
   const { searchQuery } = req.query
   if (!searchQuery) {
@@ -152,7 +156,9 @@ const NoteSearch = async (req, res, next) => {
   }
 }
 
-const readNote = async (req, res, next) => {
+
+
+const readNote = async (req, res) => {
   const userID = req.user_id
   const bookId = parseInt(req.params.noteId)
   if (!bookId) {
@@ -185,7 +191,7 @@ const readNote = async (req, res, next) => {
   }
 }
 
-const updateNote = async (req, res, next) => {
+const updateNote = async (req, res) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
   const { title, note, image } = req.body
@@ -291,8 +297,10 @@ const updateNote = async (req, res, next) => {
   }
 }
 
+
+
 // Delete Note
-const deleteNote = async (req, res, next) => {
+const deleteNote = async (req, res) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
 
@@ -324,8 +332,9 @@ const deleteNote = async (req, res, next) => {
   }
 }
 
+
 // User Trash
-const trash = async (req, res, next) => {
+const trash = async (req, res) => {
   const userID = req.user_id
   try {
     const userTrash = await notes.findAll({
@@ -385,7 +394,7 @@ const deleteFromTrash = async (req, res) => {
 }
 
 // Restore Trash
-const restoreTrash = async (req, res, next) => {
+const restoreTrash = async (req, res) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
   try {
@@ -411,7 +420,7 @@ const restoreTrash = async (req, res, next) => {
   }
 }
 
-const emptyTrash = async (req, res, next) => {
+const emptyTrash = async (req, res) => {
   const userID = req.user_id
   try {
     const deleteItem = await notes.destroy({

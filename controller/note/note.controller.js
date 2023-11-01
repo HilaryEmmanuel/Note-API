@@ -194,7 +194,7 @@ const readNote = async (req, res) => {
 const updateNote = async (req, res) => {
   const userID = req.user_id
   const noteId = parseInt(req.params.noteId)
-  const { title, note, image } = req.body
+  const { title, note } = req.body
 
   try {
     if (!noteId) {
@@ -202,86 +202,15 @@ const updateNote = async (req, res) => {
         .status(400)
         .json({ success: false, message: 'make sure you supply an id' })
     }
-    if (title && note && image) {
-      const Notes = await notes.update(
-        { title, note, image },
-        { where: { note_id: noteId, user_id: userID } }
-      )
-      const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
-      if (!Notes) {
-        return res
-          .status(200)
-          .json({ success: false, message: 'note was not updated' })
-      }
-      return res.status(200).json({
-        success: true,
-        message: 'note succesfully updated',
-        notes: updatedNotes
-      })
-    } else if (title && note) {
-      const Notes = await notes.update(
-        { title, note },
-        { where: { note_id: noteId, user_id: userID } }
-      )
-      const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
-      if (!Notes) {
-        return res
-          .status(200)
-          .json({ success: false, message: 'note was not updated' })
-      }
-      return res.status(200).json({
-        success: true,
-        message: 'note succesfully updated',
-        notes: updatedNotes
-      })
-    } else if (title) {
-      const Notes = await notes.update(
-        { title },
-        { where: { note_id: noteId, user_id: userID } }
-      )
-      const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
-      if (!Notes) {
-        return res
-          .status(200)
-          .json({ success: false, message: 'note was not updated' })
-      }
-      return res.status(200).json({
-        success: true,
-        message: 'note succesfully updated',
-        notes: updatedNotes
-      })
-    } else if (note) {
-      const Notes = await notes.update(
-        { note },
-        { where: { note_id: noteId, user_id: userID } }
-      )
-      const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
-      if (!Notes) {
-        return res
-          .status(200)
-          .json({ success: false, message: 'note was not updated' })
-      }
-      return res.status(200).json({
-        success: true,
-        message: 'note succesfully updated',
-        notes: updatedNotes
-      })
-    } else if (image) {
-      const Notes = await notes.update(
-        { note },
-        { where: { note_id: noteId, user_id: userID } }
-      )
-      const updatedNotes = await notes.findOne({ where: { note_id: noteId } })
-      if (!Notes) {
-        return res
-          .status(200)
-          .json({ success: false, message: 'note was not updated' })
-      }
-      return res.status(200).json({
-        success: true,
-        message: 'note succesfully updated',
-        notes: updatedNotes
-      })
+    const Notes = await notes.update(
+      { title, note },
+      { where: { note_id: noteId, user_id: userID } }
+    )
+    if (!Notes) {
+      return res.status(400).json({ success: false, message: 'note not updated' })
+
+    } else {
+      res.status(200).json({ success: 'true', message: 'not successfully updated' })
     }
     return res.status(400).json({
       success: false,

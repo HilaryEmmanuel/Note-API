@@ -193,7 +193,7 @@ const readNote = async (req, res) => {
 
 const updateNote = async (req, res) => {
   const userID = req.user_id
-  const noteId = req.params.noteId
+  const noteId = req.params.noteId 
   const { title, note } = req.body
 
   try {
@@ -210,7 +210,7 @@ const updateNote = async (req, res) => {
       return res.status(400).json({ success: false, message: 'note not updated' })
 
     } else {
-      res.status(200).json({ success: 'true', message: 'not successfully updated' })
+      res.status(200).json({ success: 'true', message: 'note successfully updated' })
     }
     return res.status(400).json({
       success: false,

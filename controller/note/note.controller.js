@@ -193,7 +193,7 @@ const readNote = async (req, res) => {
 
 const updateNote = async (req, res) => {
   const userID = req.user_id
-  const noteId = parseInt(req.params.noteId)
+  const noteId = req.params.noteId
   const { title, note } = req.body
 
   try {

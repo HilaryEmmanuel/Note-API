@@ -28,7 +28,7 @@ app.use(cookieParser())
 const options = {
   origin: '*',
   methods: ['POST', 'PATCH', 'GET', 'DELETE'],
-  allowheader: ['Content-Type', 'authorization']
+  allowheader: ['Content-Type', 'Authorization']
 }
 app.use(cors(options))
 

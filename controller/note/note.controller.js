@@ -210,7 +210,7 @@ const updateNote = async (req, res) => {
       return res.status(400).json({ success: false, message: 'note not updated' })
 
     } else {
-      res.status(200).json({ success: 'true', message: 'note successfully updated' })
+      return res.status(200).json({ success: 'true', message: 'note successfully updated' })
     }
     return res.status(400).json({
       success: false,
@@ -336,7 +336,7 @@ const restoreTrash = async (req, res) => {
       where: { note_id: noteId, user_id: userID }
     })
     if (restoreItemFromTrash) {
-      res.status(200).json({ success: true, message: 'deleted item restored' })
+      return res.status(200).json({ success: true, message: 'deleted item restored' })
     }
     return res.status(200).json({ success: true, message: 'note not found' })
   } catch (err) {

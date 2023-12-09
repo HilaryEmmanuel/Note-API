@@ -211,7 +211,7 @@ const updateNote = async (req, res) => {
 
     } else {
         const findnote = await notes.findAll({
-      where: { note_id: noteId, user_id: req.id }
+      where: { note_id: noteId, user_id: userID }
     })
       return res.status(200).json({ success: 'true', message: 'note successfully updated' ,
     note: findnote })

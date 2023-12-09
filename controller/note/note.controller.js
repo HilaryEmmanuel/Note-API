@@ -207,15 +207,15 @@ const updateNote = async (req, res) => {
       { where: { note_id: noteId, user_id: userID } }
     )
     if (!Notes) {
-      return res.status(400).json({ success: false, message: 'note not updated' })
+      return res.status(409).json({ success: false, message: 'note not updated' })
 
     } else {
-      return res.status(200).json({ success: 'true', message: 'note successfully updated' })
-    }
-    return res.status(400).json({
-      success: false,
-      message: 'please set the fields you would like to update'
+        const findnote = await notes.findAll({
+      where: { note_id: noteId, user_id: req.id }
     })
+      return res.status(200).json({ success: 'true', message: 'note successfully updated' ,
+    note: findnote })
+    }
   } catch (err) {
     console.error('Error updating Note ', err)
     return (

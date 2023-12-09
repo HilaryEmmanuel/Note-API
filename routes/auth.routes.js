@@ -10,8 +10,7 @@ router.post('/api/v1/auth/signup', middleware.verifySignup, controller.signup)
 
 router.post('/api/v1/auth/login', controller.login)
 
-router.post('/api/v1/auth/refreshToken',   middleware.authJwt,
-middleware.invalidateTokens, controller.refreshAndVerifyToken)
+router.post('/api/v1/auth/refreshToken', controller.refreshAndVerifyToken)
 
 router.post('/api/v1/auth/forgot-password', controller.forgotPassword)
 

@@ -30,6 +30,3 @@ This is a NOTE API built with Nodejs + express js
 
 
 
-
-# Api Documentation Postman
-https://www.postman.com/cloudy-escape-698934/workspace/project-workspace/collection/24822385-7840ccdc-b7fc-4090-a5ae-a707b40355f2?action=share&creator=24822385&active-environment=24822385-5d70ead2-9526-43e5-9103-e6c7590a7226

@@ -28,15 +28,6 @@ This is a NOTE API built with Nodejs + express js
 - Delete note
 - Trash System
 
-# Testing
-- all Endpoints are tested
-
-# Major Dependencies
-- Express js - the core of the API
-- Postgresql - the Relational database mangement system used
-- sequelize - the Orm used
-- supertest & mocha - for testing
-- jsonwebtoken - for creation and verification of jwt token
 
 
 
